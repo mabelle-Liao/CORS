@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Form</title>
+    <script>
+        function submitForm() {
+            var xhr = new XMLHttpRequest();
+            var url = "http://localhost:8081/submit";
+            var formData = new FormData(document.getElementById("myForm"));
+            
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        // 表單提交成功，顯示成功訊息
+                        document.getElementById("successMessage").innerHTML = "Successfully!";
+                    } else {
+                        // 表單提交失敗，顯示失敗訊息
+                        document.getElementById("successMessage").innerHTML = "Failed, please try again!";
+                    }
+                }
+            };
+            xhr.send(formData);
+            return false;
+        }
+    </script>
+</head>
+<body>
+    <h1>Simple Form</h1>
+    <form id="myForm" onsubmit="return submitForm()">
+        Name: <input type="text" name="name" maxlength="50"><br>
+        Email: <input type="email" name="email" maxlength="100"><br>
+        <input type="submit" value="Submit">
+    </form>
+    <!-- 用於顯示成功訊息 -->
+    <div id="successMessage"></div>
+</body>
+</html>
